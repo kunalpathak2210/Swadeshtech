@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Swadeshi Tech | Enterprise Business Automation</title>
+    <style>
+        /* --- Base & Reset --- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', 'Segoe UI', Roboto, sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            background-color: #0b0f14;
+            color: #ffffff;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* --- Background Animation --- */
+        .bg-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+        }
+
+        .grid-overlay {
+            position: absolute;
+            width: 200%;
+            height: 200%;
+            background-image: linear-gradient(rgba(0, 255, 255, 0.05) 1px, transparent 1px),
+                              linear-gradient(90deg, rgba(0, 255, 255, 0.05) 1px, transparent 1px);
+            background-size: 40px 40px;
+            transform: perspective(500px) rotateX(60deg);
+            animation: moveGrid 15s linear infinite;
+        }
+
+        .orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.12;
+            animation: floatOrb 12s infinite alternate ease-in-out;
+        }
+        .orb-saffron { width: 300px; height: 300px; background: #ff9933; top: 5%; left: -50px; }
+        .orb-cyan { width: 350px; height: 350px; background: #00ffff; bottom: 5%; right: -50px; }
+
+        @keyframes moveGrid { from { transform: translateY(0) rotateX(60deg); } to { transform: translateY(40px) rotateX(60deg); } }
+        @keyframes floatOrb { from { transform: translate(0, 0); } to { transform: translate(50px, 70px); } }
+
+        /* --- Header --- */
+        header {
+            padding: 20px 5%;
+            background: rgba(11, 15, 20, 0.9);
+            backdrop-filter: blur(20px);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .brand-title {
+            font-size: 1.5rem;
+            font-weight: 800;
+            letter-spacing: 1px;
+            background: linear-gradient(to right, #ff9933, #ffffff, #138808);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-transform: uppercase;
+        }
+
+        nav ul { display: flex; list-style: none; gap: 30px; }
+        nav a { text-decoration: none; color: #aaa; font-size: 0.8rem; font-weight: 600; text-transform: uppercase; transition: 0.3s; }
+        nav a:hover { color: #00ffff; }
+
+        /* --- Hero Section --- */
+        .hero {
+            padding: 80px 8%;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 30px;
+        }
+
+        .hero-logo { 
+            width: 120px; 
+            filter: drop-shadow(0 0 25px rgba(0, 255, 255, 0.4));
+            animation: float 5s infinite ease-in-out;
+        }
+        
+        .tagline {
+            font-size: clamp(2rem, 8vw, 4rem);
+            font-weight: 800;
+            line-height: 1.1;
+            letter-spacing: -1px;
+        }
+
+        .hero p { color: #888; font-size: 1.1rem; max-width: 600px; }
+
+        /* --- Process Section --- */
+        .section-header { text-align: center; margin-bottom: 50px; }
+        .section-header h2 { color: #ff9933; font-size: 2rem; text-transform: uppercase; margin-bottom: 10px; }
+        .section-header p { color: #666; font-size: 1rem; }
+
+        .process-container {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 25px;
+            margin-bottom: 50px;
+        }
+
+        .process-card {
+            background: rgba(255,255,255,0.02);
+            border: 1px solid rgba(255,255,255,0.05);
+            border-radius: 20px;
+            padding: 35px;
+            transition: 0.3s;
+        }
+
+        .process-card.old { border-left: 5px solid #ff4444; }
+        .process-card.new { border-left: 5px solid #138808; background: rgba(19, 136, 8, 0.03); }
+
+        .status-tag { 
+            font-size: 0.7rem; 
+            font-weight: 900; 
+            padding: 4px 12px; 
+            border-radius: 20px; 
+            text-transform: uppercase; 
+            margin-bottom: 15px; 
+            display: inline-block;
+        }
+        .old .status-tag { background: rgba(255, 68, 68, 0.1); color: #ff4444; }
+        .new .status-tag { background: rgba(19, 136, 8, 0.1); color: #138808; }
+
+        .process-card h3 { margin-bottom: 15px; font-size: 1.4rem; }
+        .process-card ul { list-style: none; color: #999; }
+        .process-card ul li { margin-bottom: 10px; font-size: 0.95rem; display: flex; align-items: flex-start; gap: 10px; }
+
+        /* --- Services --- */
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+        }
+
+        .service-card {
+            background: rgba(255,255,255,0.03);
+            padding: 40px;
+            border-radius: 24px;
+            border: 1px solid rgba(255,255,255,0.08);
+            transition: 0.4s;
+        }
+
+        .service-card:hover { border-color: #00ffff; transform: translateY(-5px); background: rgba(0, 255, 255, 0.02); }
+        .service-card h4 { color: #00ffff; margin-bottom: 15px; font-size: 1.25rem; }
+        .service-card p { color: #777; font-size: 0.95rem; }
+
+        /* --- Contact (Free Website Update) --- */
+        .contact-box {
+            background: linear-gradient(145deg, #161b22, #0b0f14);
+            padding: 60px 30px;
+            border-radius: 30px;
+            border: 1px solid rgba(255,255,255,0.1);
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .btn-deploy {
+            display: inline-block;
+            width: 100%;
+            max-width: 450px;
+            padding: 22px;
+            background: linear-gradient(45deg, #ff9933, #138808);
+            border: none;
+            border-radius: 12px;
+            color: white;
+            font-weight: 800;
+            text-decoration: none;
+            text-transform: uppercase;
+            cursor: pointer;
+            font-size: 1.1rem;
+            letter-spacing: 1.5px;
+            transition: 0.3s ease;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+        }
+        
+        .btn-deploy:hover { 
+            filter: brightness(1.2); 
+            transform: translateY(-3px); 
+            box-shadow: 0 15px 30px rgba(19, 136, 8, 0.2); 
+        }
+
+        @media (max-width: 768px) {
+            header { flex-direction: column; gap: 15px; }
+            .hero { padding-top: 40px; }
+            .tagline { font-size: 2.2rem; }
+        }
+
+        @media (min-width: 769px) {
+            .process-container { grid-template-columns: 1fr 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="bg-container">
+        <div class="grid-overlay"></div>
+        <div class="orb orb-saffron"></div>
+        <div class="orb orb-cyan"></div>
+    </div>
+
+    <header>
+        <div class="brand-title">Swadeshi Tech</div>
+        <nav>
+            <ul>
+                <li><a href="#process">Efficiency</a></li>
+                <li><a href="#solutions">Solutions</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section class="hero">
+        <img src="https://i.ibb.co/B5DztSN7/1774505259404.png" alt="Swadeshi Tech Logo" class="hero-logo">
+        <h1 class="tagline">Optimize Workflows.<br><span style="color:#00ffff;">Maximize Profit.</span></h1>
+        <p>Swadeshi Tech specializes in deploying high-performance business operating systems that eliminate manual friction and drive scalable growth.</p>
+    </section>
+
+    <section id="process">
+        <div class="section-header">
+            <h2>System Transformation</h2>
+            <p>Moving your operations from legacy manual constraints to modern automated excellence.</p>
+        </div>
+
+        <div class="process-container">
+            <div class="process-card old">
+                <span class="status-tag">Legacy Operations</span>
+                <h3>Manual Constraints</h3>
+                <ul>
+                    <li><span style="color:#ff4444;">✕</span> Physical paper records & fragmented data silos</li>
+                    <li><span style="color:#ff4444;">✕</span> High margin for human error in accounting</li>
+                    <li><span style="color:#ff4444;">✕</span> Slow, staff-dependent task execution</li>
+                    <li><span style="color:#ff4444;">✕</span> Zero real-time visibility into business metrics</li>
+                    <li><span style="color:#ff4444;">✕</span> Scalability limited by physical labor</li>
+                </ul>
+            </div>
+
+            <div class="process-card new">
+                <span class="status-tag">Swadeshi Ecosystem</span>
+                <h3>Automated Precision</h3>
+                <ul>
+                    <li><span style="color:#138808;">✓</span> Unified cloud-based digital infrastructure</li>
+                    <li><span style="color:#138808;">✓</span> Error-free AI-assisted financial auditing</li>
+                    <li><span style="color:#138808;">✓</span> System-driven, independent workflow execution</li>
+                    <li><span style="color:#138808;">✓</span> Real-time analytics dashboard accessible anywhere</li>
+                    <li><span style="color:#138808;">✓</span> Exponential scaling with zero overhead</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <section id="solutions">
+        <div class="section-header">
+            <h2>Enterprise Expertise</h2>
+            <p>Built for the most demanding mission-critical environments.</p>
+        </div>
+        <div class="services-grid">
+            <div class="service-card">
+                <h4>Retail & Logistics</h4>
+                <p>Advanced POS integration, automated inventory restocking, and seamless digital customer portals.</p>
+            </div>
+            <div class="service-card">
+                <h4>Healthcare Management</h4>
+                <p>Automated patient registration, encrypted record vaults, and intelligent clinic queue management.</p>
+            </div>
+            <div class="service-card">
+                <h4>Educational Infrastructure</h4>
+                <p>Complete campus management including admissions, digital assessments, and automated reporting.</p>
+            </div>
+            <div class="service-card">
+                <h4>Autonomous Operations</h4>
+                <p>Custom automation bots designed to execute repetitive database tasks with 100% accuracy 24/7.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact">
+        <div class="contact-box">
+            <h2 style="color:#fff; margin-bottom: 10px;">Get Your Website For Free</h2>
+            <p style="color:#888; margin-bottom: 40px;">Ready to scale? Launch your digital presence with zero upfront costs today.</p>
+            
+            <a href="contact.html" class="btn-deploy">Get Your Website For Free</a>
+
+            <div style="margin-top: 50px; border-top: 1px solid rgba(255,255,255,0.05); padding-top: 25px;">
+                <p style="font-weight: 800; color: #ff9933; text-transform: uppercase; letter-spacing: 2px;">Kunal Pathak</p>
+                <p style="font-size: 0.85rem; color: #666;">Chief Executive Officer | Delhi, India</p>
+            </div>
+        </div>
+    </section>
+
+    <footer style="padding: 60px 40px 40px; text-align: center; color: #444; font-size: 0.75rem;">
+        &copy; 2026 Swadeshi Tech. All Rights Reserved. Engineered for Global Performance.
+    </footer>
+
+    <script>
+        document.querySelectorAll('nav a').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                if (this.getAttribute('href').startsWith('#')) {
+                    e.preventDefault();
+                    document.querySelector(this.getAttribute('href')).scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+        });
+    </script>
+</body>
+</html>

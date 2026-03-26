@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Get Your Website | Swadeshi Tech</title>
+    <style>
+        /* --- Base & Reset --- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', 'Segoe UI', Roboto, sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            background-color: #0b0f14;
+            color: #ffffff;
+            line-height: 1.6;
+            overflow-x: hidden;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        /* --- Background Animation --- */
+        .bg-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+        }
+
+        .grid-overlay {
+            position: absolute;
+            width: 200%;
+            height: 200%;
+            background-image: linear-gradient(rgba(0, 255, 255, 0.05) 1px, transparent 1px),
+                              linear-gradient(90deg, rgba(0, 255, 255, 0.05) 1px, transparent 1px);
+            background-size: 40px 40px;
+            transform: perspective(500px) rotateX(60deg);
+            animation: moveGrid 15s linear infinite;
+        }
+
+        .orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.12;
+            animation: floatOrb 12s infinite alternate ease-in-out;
+        }
+        .orb-saffron { width: 300px; height: 300px; background: #ff9933; top: 5%; left: -50px; }
+        .orb-cyan { width: 350px; height: 350px; background: #00ffff; bottom: 5%; right: -50px; }
+
+        @keyframes moveGrid { from { transform: translateY(0) rotateX(60deg); } to { transform: translateY(40px) rotateX(60deg); } }
+        @keyframes floatOrb { from { transform: translate(0, 0); } to { transform: translate(50px, 70px); } }
+
+        /* --- Header --- */
+        header {
+            padding: 20px 5%;
+            background: rgba(11, 15, 20, 0.9);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .brand-title {
+            font-size: 1.5rem;
+            font-weight: 800;
+            letter-spacing: 1px;
+            background: linear-gradient(to right, #ff9933, #ffffff, #138808);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-transform: uppercase;
+            text-decoration: none;
+        }
+
+        .btn-home {
+            text-decoration: none;
+            color: #aaa;
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            padding: 8px 16px;
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 8px;
+            transition: 0.3s;
+        }
+
+        .btn-home:hover { border-color: #00ffff; color: #00ffff; }
+
+        /* --- Form Section --- */
+        .container {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 40px 5%;
+        }
+
+        .contact-box {
+            background: rgba(22, 27, 34, 0.8);
+            backdrop-filter: blur(10px);
+            padding: 40px;
+            border-radius: 24px;
+            border: 1px solid rgba(255,255,255,0.1);
+            width: 100%;
+            max-width: 500px;
+            text-align: center;
+        }
+
+        h2 { font-size: 1.8rem; margin-bottom: 10px; color: #fff; }
+        p { color: #888; margin-bottom: 30px; font-size: 0.9rem; }
+
+        .form-group { text-align: left; margin-bottom: 15px; }
+        label { display: block; font-size: 0.75rem; color: #ff9933; text-transform: uppercase; font-weight: 700; margin-bottom: 5px; margin-left: 5px; }
+
+        input {
+            width: 100%;
+            padding: 14px;
+            background: #0b0f14;
+            border: 1px solid #30363d;
+            border-radius: 10px;
+            color: white;
+            font-size: 1rem;
+            outline: none;
+            transition: 0.3s;
+        }
+
+        input:focus { border-color: #138808; }
+
+        .btn-submit {
+            width: 100%;
+            padding: 18px;
+            background: linear-gradient(45deg, #ff9933, #138808);
+            border: none;
+            border-radius: 12px;
+            color: white;
+            font-weight: 800;
+            text-transform: uppercase;
+            cursor: pointer;
+            font-size: 1rem;
+            margin-top: 10px;
+            transition: 0.3s;
+        }
+
+        .btn-submit:disabled { opacity: 0.5; cursor: not-allowed; }
+
+        /* --- Success Overlay --- */
+        #success-page {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #0b0f14;
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .success-content h1 { color: #138808; font-size: 2.5rem; margin-bottom: 20px; }
+        .success-content p { color: #aaa; font-size: 1.2rem; }
+
+        @media (max-width: 480px) {
+            .contact-box { padding: 25px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="bg-container">
+        <div class="grid-overlay"></div>
+        <div class="orb orb-saffron"></div>
+        <div class="orb orb-cyan"></div>
+    </div>
+
+    <header>
+        <a href="index.html" class="brand-title">Swadeshi Tech</a>
+        <a href="index.html" class="btn-home">Home</a>
+    </header>
+
+    <div class="container">
+        <div class="contact-box" id="form-container">
+            <h2>Get Your Website</h2>
+            <p>Fill out the details for your professional website.</p>
+
+            <form id="contactForm">
+                <div class="form-group">
+                    <label>Full Name</label>
+                    <input type="text" id="name" placeholder="Enter your name" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Age</label>
+                    <input type="number" id="age" placeholder="Enter your age" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Primary Contact Number</label>
+                    <input type="tel" id="contact1" placeholder="Mobile number" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Alternative Contact Number</label>
+                    <input type="tel" id="contact2" placeholder="Secondary mobile number">
+                </div>
+
+                <div class="form-group">
+                    <label>Shop/Business Name</label>
+                    <input type="text" id="shopName" placeholder="Name of your shop" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Type of Business</label>
+                    <input type="text" id="businessType" placeholder="e.g. Retail, Grocery, Medical" required>
+                </div>
+
+                <button type="submit" id="submitBtn" class="btn-submit">Submit Request</button>
+            </form>
+        </div>
+    </div>
+
+    <div id="success-page">
+        <div class="success-content">
+            <img src="https://i.ibb.co/B5DztSN7/1774505259404.png" alt="Logo" style="width: 80px; margin-bottom: 20px;">
+            <h1>Congratulations!</h1>
+            <p>Your request has been sent successfully.</p>
+            <p style="font-size: 1rem; margin-top: 10px;">Our team will contact you within 24 hours.</p>
+            <p style="color: #444; margin-top: 30px; font-size: 0.8rem;">Redirecting to home page...</p>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('contactForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const submitBtn = document.getElementById('submitBtn');
+            submitBtn.innerText = "Processing...";
+            submitBtn.disabled = true;
+
+            // 1. Data Collection
+            const name = document.getElementById('name').value;
+            const age = document.getElementById('age').value;
+            const c1 = document.getElementById('contact1').value;
+            const c2 = document.getElementById('contact2').value || "None";
+            const shop = document.getElementById('shopName').value;
+            const type = document.getElementById('businessType').value;
+
+            // 2. Telegram Config
+            const token = "8475518695:AAHbrSHc14HMs5dOqovm_8G9OsQLgwzwTIw";
+            const chatId = "8241117124";
+
+            // 3. Construct Message
+            const msg = `
+🚀 *New Request: Get Your Website*
+----------------------------------
+👤 *Name:* ${name}
+🎂 *Age:* ${age}
+📞 *Contact:* ${c1}
+📱 *Alt Contact:* ${c2}
+🏪 *Shop:* ${shop}
+🛠️ *Category:* ${type}
+----------------------------------
+📌 *Platform: Swadeshi Tech Site*`;
+
+            // 4. Send to Telegram API
+            fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    chat_id: chatId,
+                    text: msg,
+                    parse_mode: 'Markdown'
+                })
+            })
+            .then(res => {
+                if (res.ok) {
+                    // Show Success UI
+                    document.getElementById('form-container').style.display = 'none';
+                    document.getElementById('success-page').style.display = 'flex';
+
+                    // Updated redirect to index.html after 4 seconds
+                    setTimeout(() => {
+                        window.location.href = 'index.html';
+                    }, 4000);
+                } else {
+                    alert("Submission failed. Please check your bot token/ID.");
+                    submitBtn.innerText = "Submit Request";
+                    submitBtn.disabled = false;
+                }
+            })
+            .catch(err => {
+                alert("Network error. Please try again.");
+                submitBtn.innerText = "Submit Request";
+                submitBtn.disabled = false;
+            });
+        });
+    </script>
+
+</body>
+</html>
